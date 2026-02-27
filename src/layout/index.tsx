@@ -7,7 +7,6 @@ const Layout = () => {
     <S.Container>
       <Sidebar />
       <S.MainContent>
-        {/* O Outlet é onde o conteúdo de cada rota será renderizado */}
         <Outlet />
       </S.MainContent>
     </S.Container>

@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'remixicon/fonts/remixicon.css'
 import { lazy, Suspense } from 'react';
 import Layout from './layout';
+import Evolucoes from './pages/evolucoes';
+import Settings from './pages/settings';
+import Agenda from './pages/Agenda';
 
 // Carregamento dinâmico (Lazy Loading)
 const Dashboard = lazy(() => import('./pages/dashboard'));
@@ -17,7 +20,9 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="pacientes" element={<Patients />} />
-            {/* Adicione novas rotas aqui: <Route path="agenda" element={<Agenda />} /> */}
+            <Route path="agenda" element={<Agenda />} />
+            <Route path="evolucoes" element={<Evolucoes />} />
+            <Route path="configuracoes" element={<Settings />} />
           </Route>
         </Routes>
       </Suspense>

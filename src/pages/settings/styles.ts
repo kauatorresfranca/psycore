@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
-export const Evolucoes = styled.div`
+export const Settings = styled.div`
   
 `;
