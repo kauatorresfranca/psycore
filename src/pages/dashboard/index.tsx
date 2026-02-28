@@ -11,7 +11,7 @@ const Dashboard: React.FC = () => {
 
       <S.StatsGrid>
         <S.Card>
-          <h4>Pacientes Ativos</h4>
+          <h4>Pacientes Totais</h4>
           <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#3b82f6' }}>24</p>
         </S.Card>
         

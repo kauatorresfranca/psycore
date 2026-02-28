@@ -13,7 +13,7 @@ const Sidebar = () => {
   return (
     <S.Sidebar>
       <S.Logo>
-        <span>🌱</span> Psycore
+        <span><i className="ri-brain-line"></i></span> Psycore
       </S.Logo>
 
       <S.NavMenu>

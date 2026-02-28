@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors } from '../../../styles';
 
 export const Container = styled.div`
   display: flex;
@@ -25,10 +26,10 @@ export const Logo = styled.h1`
   margin-bottom: 3rem;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 
   span {
-    color: #3b82f6;
+    color: ${colors.primary};
   }
 `;
 
@@ -51,7 +52,7 @@ export const NavItem = styled.button<NavItemProps>`
   border-radius: 8px;
   border: none;
   background-color: 'transparent';
-  color: #083ed1;
+  color: ${colors.primary};
   font-size: 0.95rem;
   font-weight: 400;
   cursor: pointer;
@@ -61,7 +62,7 @@ export const NavItem = styled.button<NavItemProps>`
   i {
     font-size: 20px;
     font-weight: 200;
-    color: #083ed1;
+    color: ${colors.primary};
   }
 
   &.active {
