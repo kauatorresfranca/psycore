@@ -8,7 +8,7 @@ import Agenda from './pages/Agenda';
 
 // Carregamento dinâmico (Lazy Loading)
 const Dashboard = lazy(() => import('./pages/dashboard'));
-const Patients = lazy(() => import('./pages/Patients')); // Exemplo de outra página
+const Patients = lazy(() => import('./pages/patients')); // Exemplo de outra página
 
 function App() {
   return (

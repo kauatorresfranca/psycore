@@ -1,29 +1,43 @@
-import React from 'react';
+import React, {useEffect } from 'react';
 import * as S from './styles'
+import api from '../../services/api';
 
 const Dashboard: React.FC = () => {
+
+  const cardsData = [
+    { title: 'Pacientes Totais', value: 24, sub_value: '12 ativos', icon: 'ri-group-line' },
+    { title: 'Consultas Hoje', value: 6, sub_value: '3 agendadas', icon: 'ri-calendar-2-line' },
+    { title: 'Evoluções Pendentes', value: 2, sub_value: '0 concluídas', icon: 'ri-file-list-line' },
+  ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get('/pacientes/');
+        console.log('Dados do dashboard:', response.data);
+      } catch (error) {
+        console.error('Erro ao buscar dados do dashboard:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <S.Header>
-        <h2>Olá, Dra. Ana!</h2>
+        <h2>Olá, Dra. Ticiana!</h2>
         <p>Confira como está o dia de hoje na sua clínica.</p>
       </S.Header>
 
       <S.StatsGrid>
-        <S.Card>
-          <h4>Pacientes Totais</h4>
-          <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#3b82f6' }}>24</p>
-        </S.Card>
-        
-        <S.Card>
-          <h4>Consultas Hoje</h4>
-          <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#10b981' }}>6</p>
-        </S.Card>
-        
-        <S.Card>
-          <h4>Evoluções Pendentes</h4>
-          <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#f59e0b' }}>2</p>
-        </S.Card>
+        {cardsData.map((card, index) => (
+          <S.Card key={index}>
+            <h4>{card.title} <i className={card.icon}></i></h4>
+            <p>{card.value}</p>
+            <span>{card.sub_value}</span>
+          </S.Card>
+        ))}
       </S.StatsGrid>
     </>
   );

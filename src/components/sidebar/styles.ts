@@ -17,6 +17,7 @@ export const Sidebar = styled.aside`
   display: flex;
   flex-direction: column;
   padding: 2rem 1.5rem;
+  position: relative;
 `;
 
 export const Logo = styled.h1`
@@ -51,24 +52,109 @@ export const NavItem = styled.button<NavItemProps>`
   padding: 0.8rem 1rem;
   border-radius: 8px;
   border: none;
-  background-color: 'transparent';
-  color: ${colors.primary};
+  background-color: transparent;
+  color: #64748b;
   font-size: 0.95rem;
-  font-weight: 400;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
 
   i {
     font-size: 20px;
-    font-weight: 200;
-    color: ${colors.primary};
+    color: #64748b;
   }
 
   &.active {
     background-color: #bfddfa62;
+    color: ${colors.primary};
+
+    i {
+      color: ${colors.primary};
+    }
   }
-  
+
+  &:hover:not(.active) {
+    background-color: #f1f5f9;
+  }
+`;
+
+// --- NOVOS ESTILOS PARA O MODAL DE LOGOUT ---
+
+export const UserSectionContainer = styled.div`
+  margin-top: auto;
+  position: relative;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+`;
+
+export const LogoutModal = styled.div`
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ef4444; /* Vermelho para destaque de sair */
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #fef2f2;
+  }
+
+  i {
+    font-size: 18px;
+  }
+`;
+
+export const UserTrigger = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #f8fafc;
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  i {
+    margin-left: auto;
+    color: #94a3b8;
+  }
+`;
+
+export const UserInfo = styled.div`
+  h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+  }
+  p {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin: 0;
+    text-transform: uppercase;
+  }
 `;
 
 export const MainContent = styled.main`

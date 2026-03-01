@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors } from '../../../styles';
 
 export const Header = styled.header`
   margin-bottom: 2rem;
@@ -24,6 +25,30 @@ export const Card = styled.div`
   background: white;
   padding: 1.5rem;
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 2px 4px 4px rgba(0,0,0,0.05);
+
+  h4 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  i {
+    font-size: 1.2rem;
+    font-weight: 400;
+    background-color: ${colors.primary_transparent};
+    color: ${colors.primary};
+    border-radius: 50%;
+    padding: 12px;
+  }
+    
+  p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: ${colors.primary};
+  }
+
+  span { 
+    color: ${colors.text};
+  }
 `;
