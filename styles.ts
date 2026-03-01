@@ -7,6 +7,7 @@ export const colors = {
     primary_transparent: '#083ed14b',
     title: '#1e293b',
     text: '#64748b',
+    white: '#ffffff',
 }
 
 export const GlobalStyle = createGlobalStyle`

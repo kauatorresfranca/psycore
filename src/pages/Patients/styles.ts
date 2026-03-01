@@ -1,284 +1,147 @@
 import styled from 'styled-components';
 import { colors } from '../../../styles';
 
-// --- Layout Principal ---
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  h2 { font-size: 1.8rem; color: #1e293b; font-weight: 800; }
+  p { color: #64748b; margin-top: 0.3rem; }
+`;
+
+export const Toolbar = styled.div`
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   
-  h2 {
-    font-size: 1.8rem;
-    color: #1e293b;
-  }
-  
-  p {
-    color: #64748b;
-    margin-top: 0.5rem;
+  .search-group {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    i { color: #94a3b8; font-size: 1.2rem; }
+    input { border: none; width: 100%; outline: none; font-size: 0.95rem; color: #1e293b;
+      &::placeholder { color: #cbd5e1; }
+    }
   }
 `;
 
 export const AddButton = styled.button`
   background-color: ${colors.primary};
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    filter: brightness(0.9);
-    transform: translateY(-1px);
-  }
-
-  i { 
-    font-size: 1.2rem; 
-  }
+  color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 12px;
+  font-weight: 600; display: flex; align-items: center; gap: 0.6rem; cursor: pointer;
+  transition: all 0.2s; &:hover { filter: brightness(0.9); transform: translateY(-1px); }
 `;
 
-// --- Tabela de Pacientes ---
 export const TableContainer = styled.div`
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
   overflow-x: auto;
-  min-height: 200px;
 `;
 
 export const Table = styled.table`
   width: 100%;
-  text-align: left;
-  
-  /* Esse é o segredo: permite espaçamento entre as linhas */
-  border-separate: separate; 
-  border-spacing: 0 1rem; // 0 na horizontal, 1rem na vertical
+  border-separate: separate;
+  border-spacing: 0 0.8rem;
+  table-layout: fixed; /* Força o alinhamento fixo das colunas */
 
-  thead {
-    th {
-      padding: 0 1rem 0.5rem 1rem; // Ajuste para não alinhar errado com o espaçamento
-      color: #64748b;
-      font-weight: 600;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+  thead th {
+    padding: 0 1.5rem; /* Padding horizontal idêntico ao do td */
+    color: #94a3b8;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: left; /* Garante que o título acompanhe o dado */
+  }
+
+  /* Definindo larguras para as colunas não "dançarem" */
+  thead th:nth-child(1) { width: 35%; } /* Nome */
+  thead th:nth-child(2) { width: 20%; } /* Contato */
+  thead th:nth-child(3) { width: 15%; } /* Status */
+  thead th:nth-child(4) { width: 15%; } /* Cadastro */
+  thead th:nth-child(5) { width: 15%; text-align: right; } /* Ações */
+
+  tbody tr {
+    background: white;
+    transition: all 0.2s;
+    
+    td {
+      padding: 1.2rem 1.5rem; /* Padding vertical e horizontal consistentes */
+      vertical-align: middle;
+      color: #475569;
+      font-size: 0.95rem;
+      border-top: 1px solid #f1f5f9;
+      border-bottom: 1px solid #f1f5f9;
+
+      &:first-child { 
+        border-left: 1px solid #f1f5f9; 
+        border-radius: 16px 0 0 16px; 
+      }
+      &:last-child { 
+        border-right: 1px solid #f1f5f9; 
+        border-radius: 0 16px 16px 0; 
+      }
+    }
+
+    &:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); 
     }
   }
 
-  tbody {
-    tr {
-      background-color: ${colors.background}; // Garante que cada linha tenha fundo próprio
-      transition: all 0.2s;
-      
-      /* Adiciona a sombra e bordas arredondadas para parecer um card */
-      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-
-      td {
-        padding: 1.2rem 1rem;
-        color: #334155;
-        vertical-align: middle;
-        
-        /* Arredonda as pontas da linha (card) */
-        &:first-child {
-          border-top-left-radius: 12px;
-          border-bottom-left-radius: 12px;
-        }
-        &:last-child {
-          border-top-right-radius: 12px;
-          border-bottom-right-radius: 12px;
-        }
-
-        strong {
-          display: block;
-          color: #1e293b;
-          font-size: 1rem;
-        }
-
-        span {
-          font-size: 0.85rem;
-          color: #94a3b8;
-        }
-      }
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        filter: brightness(0.98);
-      }
-    }
+  .patient-cell {
+    display: flex; align-items: center; gap: 1rem;
+    .avatar { width: 38px; height: 38px; border-radius: 10px; background: #eef2ff; color: ${colors.primary};
+      display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; }
+    strong { color: #1e293b; display: block; }
+    span { font-size: 0.8rem; color: #94a3b8; }
   }
 `;
 
-
-// --- Badges e Ações ---
-interface StatusProps {
-  status: 'ativo' | 'inativo' | 'alta';
-}
-
-const statusColors = {
-  ativo: { bg: '#dcfce7', text: '#15803d' },
-  inativo: { bg: '#fee2e2', text: '#b91c1c' },
-  alta: { bg: '#e0f2fe', text: '#0369a1' },
-};
-
-export const StatusBadge = styled.span<StatusProps>`
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  background-color: ${({ status }) => statusColors[status].bg};
-  color: ${({ status }) => statusColors[status].text} !important;
-  display: inline-block;
+export const StatusBadge = styled.span<{ status: string }>`
+  padding: 6px 12px; border-radius: 8px; font-size: 0.7rem; font-weight: 800;
+  background: ${({ status }) => 
+    status === 'ativo' ? '#ecfdf5' : status === 'inativo' ? '#fef2f2' : '#eff6ff'};
+  color: ${({ status }) => 
+    status === 'ativo' ? '#10b981' : status === 'inativo' ? '#ef4444' : '#3b82f6'};
 `;
 
 export const ActionButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: ${colors.primary};
-  font-size: 1.2rem;
-  padding: 8px;
-  border-radius: 6px;
-  transition: all 0.2s;
-
-  &:hover {
-    background-color: ${colors.primary_transparent};
-    color: ${colors.primary};
-  }
+  background: none; border: none; color: #cbd5e1; cursor: pointer; font-size: 1.1rem;
+  padding: 5px; margin-left: 0.5rem; transition: 0.2s;
+  &:hover { color: ${colors.primary}; }
 `;
 
-// --- Estados Vazios e Loading ---
 export const EmptyState = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 5rem 2rem;
-  text-align: center;
-  color: #64748b;
-
-  i {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    color: #cbd5e1;
-  }
-
-  p {
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: #1e293b;
-    margin-bottom: 0.5rem;
-  }
-
-  span { 
-    font-size: 0.95rem;
-    max-width: 300px;
-  }
+  text-align: center; padding: 5rem; background: #f8fafc; border-radius: 20px; border: 2px dashed #e2e8f0;
+  i { font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem; display: block; }
+  p { color: #1e293b; font-weight: 700; font-size: 1.1rem; }
+  span { color: #94a3b8; font-size: 0.9rem; }
 `;
 
-// --- Modal ---
+// Reuse Modal Styles (Consistente com Agenda)
 export const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(4px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  padding: 1rem;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(6px);
+  display: flex; justify-content: center; align-items: center; z-index: 9999;
 `;
 
 export const ModalContent = styled.div`
-  background: white;
-  padding: 2.5rem;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 550px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  position: relative;
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    
-    h3 { 
-      font-size: 1.5rem;
-      color: #1e293b; 
-    }
-
-    button { 
-      background: #f1f5f9;
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #64748b;
-      transition: all 0.2s;
-
-      &:hover {
-        background: #e2e8f0;
-        color: #1e293b;
-      }
-    }
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
+  background: white; padding: 2.5rem; border-radius: 20px; width: 100%; max-width: 550px;
+  header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;
+    h3 { font-size: 1.3rem; color: #1e293b; }
+    button { background: #f1f5f9; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; } }
 `;
 
 export const InputGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-
-  label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #475569;
-  }
-
-  input, select {
-    padding: 0.75rem;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: #1e293b;
-    outline: none;
-    transition: border-color 0.2s;
-
-    &:focus {
-      border-color: ${colors.primary};
-    }
-
-    &::placeholder {
-      color: #94a3b8;
-    }
-  }
-
-  select {
-    cursor: pointer;
-    background: white;
-  }
+  margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.4rem;
+  label { font-size: 0.85rem; font-weight: 700; color: #475569; }
+  input, select { padding: 0.8rem; border-radius: 10px; border: 1px solid #e2e8f0; background: #f8fafc;
+    &:focus { border-color: ${colors.primary}; background: white; outline: none; } }
 `;
