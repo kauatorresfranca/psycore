@@ -30,7 +30,7 @@ const Patients: React.FC = () => {
       setLoading(true);
       const response = await api.get('/pacientes/');
       setPacientes(response.data);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Erro ao buscar pacientes:', error);
     } finally {
       setLoading(false);
@@ -39,7 +39,13 @@ const Patients: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const novoPaciente = { nome, email, numero_telefone: telefone, data_nascimento: nascimento, status };
+    const novoPaciente = { 
+      nome, 
+      email, 
+      numero_telefone: telefone, 
+      data_nascimento: nascimento, 
+      status 
+    };
 
     try {
       await api.post('/pacientes/', novoPaciente);
@@ -47,16 +53,22 @@ const Patients: React.FC = () => {
       resetForm();
       fetchPacientes();
       alert('Paciente cadastrado com sucesso!');
-    } catch (error) {
-      alert('Erro ao cadastrar. Verifique os dados.');
+    } catch (error: unknown) {
+      alert('Erro ao cadastrar. Verifique se o e-mail já existe.');
     }
   };
 
   const resetForm = () => {
-    setNome(''); setEmail(''); setTelefone(''); setNascimento(''); setStatus('ativo');
+    setNome(''); 
+    setEmail(''); 
+    setTelefone(''); 
+    setNascimento(''); 
+    setStatus('ativo');
   };
 
-  useEffect(() => { fetchPacientes(); }, []);
+  useEffect(() => {
+    fetchPacientes();
+  }, []);
 
   const pacientesFiltrados = pacientes.filter(p => 
     p.nome.toLowerCase().includes(busca.toLowerCase()) || 
@@ -89,7 +101,7 @@ const Patients: React.FC = () => {
 
       <S.TableContainer>
         {loading ? (
-          <S.EmptyState><p>Carregando prontuários...</p></S.EmptyState>
+          <S.EmptyState><p>Carregando pacientes...</p></S.EmptyState>
         ) : pacientesFiltrados.length > 0 ? (
           <S.Table>
             <thead>
@@ -144,33 +156,65 @@ const Patients: React.FC = () => {
               <h3>Cadastrar Novo Paciente</h3>
               <button onClick={() => setIsModalOpen(false)}>&times;</button>
             </header>
+            
             <form onSubmit={handleSubmit}>
               <S.InputGroup>
                 <label>Nome Completo</label>
-                <input type="text" required value={nome} onChange={e => setNome(e.target.value)} placeholder="Ex: João Silva" />
+                <input 
+                  type="text" 
+                  required 
+                  value={nome} 
+                  onChange={e => setNome(e.target.value)} 
+                  placeholder="Ex: João Silva"
+                />
               </S.InputGroup>
+
               <S.InputGroup>
                 <label>E-mail</label>
-                <input type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="joao@email.com" />
+                <input 
+                  type="email" 
+                  required 
+                  value={email} 
+                  onChange={e => setEmail(e.target.value)} 
+                  placeholder="joao@email.com"
+                />
               </S.InputGroup>
+
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <S.InputGroup>
                   <label>Telefone</label>
-                  <input type="text" required value={telefone} onChange={e => setTelefone(e.target.value)} placeholder="(82) 99999-9999" />
+                  <input 
+                    type="text" 
+                    required 
+                    value={telefone} 
+                    onChange={e => setTelefone(e.target.value)} 
+                    placeholder="(82) 99999-9999"
+                  />
                 </S.InputGroup>
+
                 <S.InputGroup>
                   <label>Nascimento</label>
-                  <input type="date" required value={nascimento} onChange={e => setNascimento(e.target.value)} />
+                  <input 
+                    type="date" 
+                    required 
+                    value={nascimento} 
+                    onChange={e => setNascimento(e.target.value)} 
+                  />
                 </S.InputGroup>
               </div>
+
               <S.InputGroup>
                 <label>Status Inicial</label>
-                <select value={status} onChange={e => setStatus(e.target.value as any)}>
+                <select 
+                  value={status} 
+                  onChange={e => setStatus(e.target.value as 'ativo' | 'inativo' | 'alta')}
+                >
                   <option value="ativo">Ativo</option>
                   <option value="inativo">Inativo</option>
                   <option value="alta">Alta</option>
                 </select>
               </S.InputGroup>
+
               <S.AddButton type="submit" style={{ width: '100%', marginTop: '1rem', justifyContent: 'center' }}>
                 Finalizar Cadastro
               </S.AddButton>
