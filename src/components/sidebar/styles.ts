@@ -79,8 +79,6 @@ export const NavItem = styled.button<NavItemProps>`
   }
 `;
 
-// --- NOVOS ESTILOS PARA O MODAL DE LOGOUT ---
-
 export const UserSectionContainer = styled.div`
   margin-top: auto;
   position: relative;
@@ -102,13 +100,15 @@ export const LogoutModal = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #ef4444; /* Vermelho para destaque de sair */
+  color: #ef4444;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  z-index: 10;
 
   &:hover {
     background-color: #fef2f2;
+    transform: translateY(-2px);
   }
 
   i {
@@ -129,11 +129,17 @@ export const UserTrigger = styled.div`
     background-color: #f8fafc;
   }
 
-  img {
+  .avatar-placeholder {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    object-fit: cover;
+    background-color: ${colors.primary};
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
   }
 
   i {

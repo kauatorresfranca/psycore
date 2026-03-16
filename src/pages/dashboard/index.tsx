@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import api from '../../services/api';
 import * as S from './styles';
@@ -20,7 +20,6 @@ const Dashboard: React.FC = () => {
   );
   const [dataFim, setDataFim] = useState(new Date().toISOString().split('T')[0]);
   const [agenda, setAgenda] = useState<AgendaItem[]>([]);
-
   const [stats, setStats] = useState({
     pacientesTotais: 0,
     consultasHoje: 0,
@@ -28,15 +27,11 @@ const Dashboard: React.FC = () => {
     faturamento: 0
   });
 
-  const chartData = [
-    { name: 'Seg', atendimentos: 4 },
-    { name: 'Ter', atendimentos: 7 },
-    { name: 'Qua', atendimentos: 5 },
-    { name: 'Qui', atendimentos: 8 },
-    { name: 'Sex', atendimentos: 6 },
-  ];
+  // UseCallback para evitar que a função seja recriada em toda renderização
+  const fetchDashboardData = useCallback(async () => {
+    const token = localStorage.getItem('@Clinica:token');
+    if (!token) return;
 
-  const fetchDashboardData = async () => {
     setLoading(true);
     try {
       const response = await api.get(`/dashboard/stats/?inicio=${dataInicio}&fim=${dataFim}`);
@@ -52,15 +47,23 @@ const Dashboard: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dataInicio, dataFim]);
 
+  // ÚNICO useEffect para controle de acesso e carga inicial
   useEffect(() => {
-    // Busca o nome salvo no momento do login
+    const token = localStorage.getItem('@Clinica:token');
+    console.log('Token encontrado:', token); // Log para depuração
+    
+    if (!token) {
+      navigate('/login', { replace: true });
+      return;
+    }
+
     const savedUser = localStorage.getItem('@Clinica:user');
     if (savedUser) setUserName(savedUser);
     
     fetchDashboardData();
-  }, [dataInicio, dataFim]);
+  }, [navigate, fetchDashboardData]);
 
   const getInitials = (name: string) => {
     const parts = name.trim().split(' ');
@@ -69,6 +72,14 @@ const Dashboard: React.FC = () => {
     }
     return parts[0][0]?.toUpperCase() || '?';
   };
+
+  const chartData = [
+    { name: 'Seg', atendimentos: 4 },
+    { name: 'Ter', atendimentos: 7 },
+    { name: 'Qua', atendimentos: 5 },
+    { name: 'Qui', atendimentos: 8 },
+    { name: 'Sex', atendimentos: 6 },
+  ];
 
   return (
     <S.Container>
@@ -163,6 +174,6 @@ const Dashboard: React.FC = () => {
       </S.MainContent>
     </S.Container>
   );
-};
+}
 
 export default Dashboard;
